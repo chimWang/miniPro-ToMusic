@@ -1,0 +1,22 @@
+<!--index.wxml-->
+<view class="container">
+  <view class='mask'>
+    <image src='/images/index/welcome.jpg' mode='aspectFill'></image>
+  </view>
+  <view class='main'>
+    <view>
+      <image src='/images/index/myMusic.svg'></image>
+      <text>我的曲库</text>
+    </view>
+    <view>
+      <image src='/images/index/music.svg'></image>
+      <text>新建创作</text>
+    </view>
+    <view>
+      <image src='/images/index/friend.svg'></image>
+      <text>好友歌曲</text>
+    </view>
+  </view>
+  <text class='zerotop'>zerotop</text>
+
+</view>
