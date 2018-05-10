@@ -1,0 +1,32 @@
+<!--pages/myMusic/myMusic.wxml-->
+<view class='container'>
+  <view catchtap='back' class='back'>
+   <image src='/images/playMusic/back.svg'></image>
+  </view>
+  <view class='background'>
+    <image src='/images/playMusic/background.jpg' mode='aspectFill'></image>
+  </view>
+  <view class='main'>
+    <scroll-view scroll-x class='music-scroll' style='white-space: nowrap; display: flex"' bindscroll='musicScroll' upper-threshold='100'>
+      <block wx:for="{{musicList}}" wx:for-item="item" wx:for-index="idx" wx:key="idx">
+        <view class='my-music'>
+          <view class='text'>
+            <view class='mask'>
+              <image src='{{item.bgImg}}' mode='aspectFill'></image>
+            </view>
+            <view>
+              <text style='font-size:x-large'>{{item.name}}</text>
+            </view>
+            <view>
+              <text>{{item.date}}</text>
+            </view>
+            <view class='controls' catchtap='listen'>
+              Listen
+            </view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+  <image src='/images/playMusic/create.svg' class='create-music'></image>
+</view>

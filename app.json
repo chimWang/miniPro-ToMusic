@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/myMusic/myMusic",
     "pages/playMusic/playMusic"
+ 
   ],
   "window": {
     "navigationStyle": "custom"

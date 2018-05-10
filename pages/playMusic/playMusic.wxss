@@ -4,6 +4,15 @@ page{
 text{
   font-size: larger;
 }
+.back{
+  position: absolute;
+  left: 20rpx;
+  top: 50rpx;
+}
+.back image{
+  width: 50rpx;
+  height: 50rpx;
+}
 .container{
   display: flex;
   flex-direction: column;

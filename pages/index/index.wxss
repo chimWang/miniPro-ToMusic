@@ -16,7 +16,7 @@ text{
   position: absolute;
   top:0;
   left: 0;
-  filter:brightness(60%) blur(4px);
+  filter:brightness(60%) blur(1px);
 }
 .mask image{
   width: 100%;

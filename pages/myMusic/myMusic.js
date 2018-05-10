@@ -1,19 +1,39 @@
-// pages/playMusic/playMusic.js
+// pages/myMusic/myMusic.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isPlayingMusic:false,
-    progress:0,
+    musicList:[
+      {
+        name:'Jungle Pink',
+        date:'2018-5-10',
+        bgImg:'/images/playMusic/background.jpg'
+      },
+      {
+        name: '55555',
+        date: '2018-5-10',
+        bgImg: '/images/playMusic/background.jpg'
+      },
+      {
+        name: '2222',
+        date: '2018-5-10',
+        bgImg: '/images/playMusic/background.jpg'
+      },
+      {
+        name: '2222',
+        date: '2018-5-10',
+        bgImg: '/images/playMusic/background.jpg'
+      }
+    ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.audioCtx=wx.createAudioContext('myAudio')
+  
   },
 
   /**
@@ -64,28 +84,17 @@ Page({
   onShareAppMessage: function () {
   
   },
-  onMusicTap(){
-    if (this.data.isPlayingMusic){
-      this.audioCtx.pause()
-      this.setData({
-        isPlayingMusic: !this.data.isPlayingMusic
-      })
-    }else{
-      this.audioCtx.play()
-      this.setData({
-        isPlayingMusic: !this.data.isPlayingMusic
-      })
-    }
-  },
-  musicStart(e){
-    var progress = parseInt((e.detail.currentTime / e.detail.duration) * 100)
-    this.setData({
-      progress: progress
-    })
-  },
-  back() {
+  back(){
     wx.navigateBack({
-
+      
     })
   },
+  listen(){
+    wx.navigateTo({
+      url: '../playMusic/playMusic',
+    })
+  },
+  musicScroll(e){
+    console.log(e.detail.scrollLeft)
+  }
 })

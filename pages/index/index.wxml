@@ -4,7 +4,7 @@
     <image src='/images/index/welcome.jpg' mode='aspectFill'></image>
   </view>
   <view class='main'>
-    <view>
+    <view catchtap='intoMyMusic'>
       <image src='/images/index/myMusic.svg'></image>
       <text>我的曲库</text>
     </view>
