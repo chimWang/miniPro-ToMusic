@@ -1,15 +1,15 @@
 <!--pages/myMusic/myMusic.wxml-->
 <view class='container'>
   <view catchtap='back' class='back'>
-   <image src='/images/playMusic/back.svg'></image>
+    <image src='/images/playMusic/back.svg'></image>
   </view>
   <view class='background'>
-    <image src='/images/playMusic/background.jpg' mode='aspectFill'></image>
+    <image src='{{mainBgImg}}' mode='aspectFill'></image>
   </view>
-  <view class='main'>
-    <scroll-view scroll-x class='music-scroll' style='white-space: nowrap; display: flex"' bindscroll='musicScroll' upper-threshold='100'>
-      <block wx:for="{{musicList}}" wx:for-item="item" wx:for-index="idx" wx:key="idx">
-        <view class='my-music'>
+  <swiper class='main' interval='10000' bindchange='swiperChange' current='1'>
+    <block wx:for='{{musicList}}' wx:for-item="item" wx:for-index="idx" wx:key="idx">
+      <swiper-item class='my-music'>
+        <view class='outter {{item.selected?"selected":""}}'>
           <view class='text'>
             <view class='mask'>
               <image src='{{item.bgImg}}' mode='aspectFill'></image>
@@ -25,8 +25,8 @@
             </view>
           </view>
         </view>
-      </block>
-    </scroll-view>
-  </view>
+      </swiper-item>
+    </block>
+  </swiper>
   <image src='/images/playMusic/create.svg' class='create-music'></image>
 </view>
