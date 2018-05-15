@@ -4,10 +4,10 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    chooseFiles:[]
   },
   //事件处理函数
   bindViewTap: function() {
@@ -54,6 +54,22 @@ Page({
   intoMyMusic(){
     wx.navigateTo({
       url: '../myMusic/myMusic'
+    })
+  },
+  chooseImage(event){
+    var that=this;
+    wx.chooseImage({
+      count: 1,
+      sourceType: ['album','camera'],
+      success: function(res) {
+        that.setData({
+          chooseFiles:res.tempFilePaths
+        })
+        console.log(that.data.chooseFiles)
+        wx.navigateTo({
+          url: '../mixMusic/mixMusic?musicImg=' + that.data.chooseFiles,
+        })
+      },
     })
   }
 })

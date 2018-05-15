@@ -42,4 +42,4 @@ text{
 .zerotop{
   position: absolute;
   bottom:30rpx;
-}
+}                                  

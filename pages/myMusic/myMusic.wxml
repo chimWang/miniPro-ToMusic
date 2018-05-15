@@ -20,7 +20,7 @@
             <view>
               <text>{{item.date}}</text>
             </view>
-            <view class='controls' catchtap='listen'>
+            <view class='controls' catchtap='listen' data-music-id="{{item.musicId}}" data-music-name="{{item.name}}" data-music-bg="{{item.bgImg}}">
               Listen
             </view>
           </view>

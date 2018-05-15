@@ -1,0 +1,10 @@
+<!--pages/test/test.wxml-->
+<view class='main' catchtap='uploadMusic'>
+  <image src='{{musicImg}}'>
+    <text>{{text}}</text>
+    <view class='mask'></view>
+  </image>
+  <canvas style="width: 380px; height: 380px;" canvas-id="progressCanvas" class='progress-canvas'></canvas>
+  <canvas style="width: 380px; height: 380px;" canvas-id="mainCanvas" class='progress-canvas'></canvas>
+
+</view>

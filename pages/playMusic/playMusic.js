@@ -7,12 +7,20 @@ Page({
   data: {
     isPlayingMusic:false,
     progress:0,
+    musicId:'',
+    musicName:'',
+    musicBg:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      musicId: options.id,
+      musicName: options.name,
+      musicBg: options.musicBg
+    })
     this.audioCtx=wx.createAudioContext('myAudio')
   },
 

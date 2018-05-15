@@ -10,29 +10,26 @@ Page({
     mainBgImg: '/images/index/welcome.jpg',
     musicList: [
       {
+        musicId:1,
         selected: false,
         name: 'Jungle Pink',
         date: '2018-5-10',
         bgImg: '/images/playMusic/background.jpg'
       },
       {
+        musicId: 2,
         selected: true,
-        name: '55555',
+        name: '幻化成风',
         date: '2018-5-10',
         bgImg: '/images/index/welcome.jpg'
       },
       {
+        musicId: 3,
         selected: false,
-        name: '2222',
+        name: 'see you again',
         date: '2018-5-10',
         bgImg: '/images/playMusic/background.jpg'
       },
-      {
-        selected: false,
-        name: '2222',
-        date: '2018-5-10',
-        bgImg: '/images/playMusic/background.jpg'
-      }
     ]
   },
 
@@ -96,9 +93,13 @@ Page({
 
     })
   },
-  listen() {
+  listen(event) {
+    let musicId=event.currentTarget.dataset.musicId
+    let musicName = event.currentTarget.dataset.musicName
+    let musicBg = event.currentTarget.dataset.musicBg
+    console.log(musicId)
     wx.navigateTo({
-      url: '../playMusic/playMusic',
+      url: '../playMusic/playMusic?id=' + musicId + '&name=' + musicName+'&musicBg='+musicBg,
     })
   },
   // musicScroll(e){

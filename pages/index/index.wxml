@@ -8,7 +8,7 @@
       <image src='/images/index/myMusic.svg'></image>
       <text>我的曲库</text>
     </view>
-    <view>
+    <view catchtap='chooseImage'>
       <image src='/images/index/music.svg'></image>
       <text>新建创作</text>
     </view>
@@ -18,5 +18,4 @@
     </view>
   </view>
   <text class='zerotop'>zerotop</text>
-
 </view>

@@ -34,7 +34,7 @@ image{
   height: 100%;
 }
 .main{
-  width: 100%;
+  width: 90%;
   height: 900rpx;
 }
 .my-music{
@@ -69,7 +69,7 @@ image{
   position: absolute;
   top: 0;
   left: 0;
-  filter: brightness(60%);
+  filter: brightness(50%);
 }
 .mask image{
   width: 100%;

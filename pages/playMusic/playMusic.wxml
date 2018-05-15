@@ -3,11 +3,11 @@
    <image src='/images/playMusic/back.svg'></image>
   </view>
   <view class='background'>
-    <image src='/images/playMusic/background.jpg' mode='aspectFill'></image>
+    <image src='{{musicBg}}' mode='aspectFill'></image>
   </view>
   <view class='title'>
     <image src='/images/playMusic/music.svg'></image>
-    <text>Jungle Pink</text>
+    <text>{{musicName}}</text>
   </view>
   <view class='player'>
     <view>
