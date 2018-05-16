@@ -106,12 +106,15 @@ Page({
         console.log(data)
         that.setData({
           isUpload: true,
-          uploadPercent: 0,
           text:'生成结束'
+        })
+        wx.navigateTo({
+          url: '../playMusic/playMusic?id=' + 2 + '&name=' + '一路向北' + '&musicBg=' + that.data.musicImg+'&collect='+true,
         })
       },
       fail() {
         console.log('upload fail')
+        wx.navigateBack({})
         this.setData({
           text: '生成失败'
         })
@@ -125,7 +128,11 @@ Page({
       })
       this.drawArc(mainCanvas, 0, res.progress / 50 *Math.PI)
     })
+  },
+  back() {
+    wx.navigateBack({
 
+    })
   },
 
 })

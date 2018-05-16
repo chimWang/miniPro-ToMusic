@@ -5,11 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isCollect:false,
     isPlayingMusic:false,
     progress:0,
     musicId:'',
     musicName:'',
-    musicBg:''
+    musicBg:'',
   },
 
   /**
@@ -19,8 +20,13 @@ Page({
     this.setData({
       musicId: options.id,
       musicName: options.name,
-      musicBg: options.musicBg
+      musicBg: options.musicBg,
     })
+    if (options.collect==='true'){
+      this.setData({
+        isCollect: true
+      })
+    }
     this.audioCtx=wx.createAudioContext('myAudio')
   },
 
@@ -92,8 +98,35 @@ Page({
     })
   },
   back() {
-    wx.navigateBack({
+    if(this.data.isCollect){
+      wx.showModal({
+        title: '不喜欢这首歌',
+        content: '确定丢弃此歌曲吗？',
+        success: function (res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '../index/index',
+            })
+          }
+        }
+      })
+    }else{
+      wx.navigateBack({
 
-    })
+      })
+    }
   },
+  remove(){
+    wx.showModal({
+      title: '不喜欢这首歌',
+      content: '确定丢弃此歌曲吗？',
+      success:function(res){
+        if(res.confirm){
+          wx.redirectTo({
+            url: '../index/index',
+          })
+        }
+      }
+    })
+  }
 })

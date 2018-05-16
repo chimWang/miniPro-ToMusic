@@ -14,7 +14,7 @@
     </view>
     <view>
       <image src='/images/index/friend.svg'></image>
-      <text>好友歌曲</text>
+      <text>歌曲排行</text>
     </view>
   </view>
   <text class='zerotop'>zerotop</text>

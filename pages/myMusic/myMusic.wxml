@@ -28,5 +28,5 @@
       </swiper-item>
     </block>
   </swiper>
-  <image src='/images/playMusic/create.svg' class='create-music'></image>
+  <image src='/images/playMusic/create.svg' class='create-music' catchtap='chooseImage'></image>
 </view>

@@ -6,29 +6,32 @@ Page({
    * 页面的初始数据
    */
   data: {
-    left: 0,
     mainBgImg: '/images/index/welcome.jpg',
+    chooseFiles:'',
     musicList: [
       {
         musicId:1,
         selected: false,
         name: 'Jungle Pink',
         date: '2018-5-10',
-        bgImg: '/images/playMusic/background.jpg'
+        bgImg: '/images/playMusic/background.jpg',
+  
       },
       {
         musicId: 2,
         selected: true,
         name: '幻化成风',
         date: '2018-5-10',
-        bgImg: '/images/index/welcome.jpg'
+        bgImg: '/images/index/welcome.jpg',
+   
       },
       {
         musicId: 3,
         selected: false,
         name: 'see you again',
         date: '2018-5-10',
-        bgImg: '/images/playMusic/background.jpg'
+        bgImg: '/images/playMusic/background.jpg',
+
       },
     ]
   },
@@ -97,9 +100,8 @@ Page({
     let musicId=event.currentTarget.dataset.musicId
     let musicName = event.currentTarget.dataset.musicName
     let musicBg = event.currentTarget.dataset.musicBg
-    console.log(musicId)
     wx.navigateTo({
-      url: '../playMusic/playMusic?id=' + musicId + '&name=' + musicName+'&musicBg='+musicBg,
+      url: '../playMusic/playMusic?id=' + musicId + '&name=' + musicName + '&musicBg=' + musicBg + '&collect=' + false,
     })
   },
   // musicScroll(e){
@@ -140,6 +142,22 @@ Page({
     this.setData({
       musicList: this.data.musicList,
       mainBgImg: this.data.musicList[nowIndex].bgImg
+    })
+  },
+  chooseImage(event) {
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        that.setData({
+          chooseFiles: res.tempFilePaths
+        })
+        console.log(that.data.chooseFiles)
+        wx.navigateTo({
+          url: '../mixMusic/mixMusic?musicImg=' + that.data.chooseFiles,
+        })
+      },
     })
   }
 

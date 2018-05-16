@@ -27,7 +27,7 @@ text{
   position: absolute;
   top:0;
   left: 0;
-  filter: brightness(60%);
+  filter: brightness(40%);
 }
 .background image{
   width: 100%;

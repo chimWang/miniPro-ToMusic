@@ -37,3 +37,12 @@ page{
   opacity: 0.7;
   text-align: center;
 } 
+.back{
+  position: absolute;
+  left: 30rpx;
+  top: 60rpx;
+}
+.back image{
+  width: 50rpx;
+  height: 50rpx;
+}

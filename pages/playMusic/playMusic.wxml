@@ -1,6 +1,6 @@
 <view class='container'>
   <view catchtap='back' class='back'>
-   <image src='/images/playMusic/back.svg'></image>
+    <image src='/images/playMusic/back.svg'></image>
   </view>
   <view class='background'>
     <image src='{{musicBg}}' mode='aspectFill'></image>
@@ -11,14 +11,14 @@
   </view>
   <view class='player'>
     <view>
-      <image src='/images/playMusic/last.svg'></image>
+      <image src='{{isCollect?"/images/playMusic/collect.svg":"/images/playMusic/last.svg"}}'></image>
     </view>
     <view>
-      <audio id='myAudio' src='http://47.100.112.48/music/Aimer.mp3' bindtimeupdate='musicStart'></audio>
+      <audio id='myAudio' src='http://www.zerotop.top/media/Aimer.mp3' bindtimeupdate='musicStart'></audio>
       <image src='{{isPlayingMusic?"/images/playMusic/pause.svg":"/images/playMusic/start.svg"}}' catchtap='onMusicTap'></image>
     </view>
     <view>
-      <image src='/images/playMusic/next.svg'></image>
+      <image src='{{isCollect?"/images/playMusic/remove.svg":"/images/playMusic/next.svg"}}' catchtap='remove'></image>
     </view>
   </view>
   <view class='musicProgress'>
