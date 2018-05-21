@@ -6,21 +6,21 @@
   <view class='background'>
     <image src='{{mainBgImg}}' mode='aspectFill'></image>
   </view>
-  <swiper class='main' interval='10000' bindchange='swiperChange' current='1'>
+  <swiper class='main' interval='10000' bindchange='swiperChange' current='0'>
     <block wx:for='{{musicList}}' wx:for-item="item" wx:for-index="idx" wx:key="idx">
       <swiper-item class='my-music'>
-        <view class='outter {{item.selected?"selected":""}}'>
+        <view class='outter {{idx===nowIndex?"selected":""}}'>
           <view class='text'>
             <view class='mask'>
-              <image src='{{item.bgImg}}' mode='aspectFill'></image>
+              <image src='{{item.imgUrl}}' mode='aspectFill'></image>
             </view>
             <view>
-              <text style='font-size:x-large'>{{item.name}}</text>
+              <text style='font-size:x-large'>{{item.musicTitle}}</text>
             </view>
             <view>
-              <text>{{item.date}}</text>
+              <text>{{item.gmtCreate}}</text>
             </view>
-            <view class='controls' catchtap='listen' data-music-id="{{item.musicId}}" data-music-name="{{item.name}}" data-music-bg="{{item.bgImg}}">
+            <view class='controls' catchtap='listen' data-music-id="{{item.id}}">
               Listen
             </view>
           </view>

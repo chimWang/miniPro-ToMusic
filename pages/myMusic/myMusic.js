@@ -1,46 +1,27 @@
 // pages/myMusic/myMusic.js
-var touchDot = 0;
-var nth = 0;
+
+const app = getApp()
+import {DBPost} from '../../db/DBPost.js'
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    mainBgImg: '/images/index/welcome.jpg',
+    mainBgImg: '',
     chooseFiles:'',
-    musicList: [
-      {
-        musicId:1,
-        selected: false,
-        name: 'Jungle Pink',
-        date: '2018-5-10',
-        bgImg: '/images/playMusic/background.jpg',
-  
-      },
-      {
-        musicId: 2,
-        selected: true,
-        name: '幻化成风',
-        date: '2018-5-10',
-        bgImg: '/images/index/welcome.jpg',
-   
-      },
-      {
-        musicId: 3,
-        selected: false,
-        name: 'see you again',
-        date: '2018-5-10',
-        bgImg: '/images/playMusic/background.jpg',
-
-      },
-    ]
+    nowIndex:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var dbPost=new DBPost()
+    console.log(dbPost.getAllMusic())
+    this.setData({
+      mainBgImg: dbPost.getAllMusic()[0].imgUrl,
+      musicList: dbPost.getAllMusic()
+    })
   },
 
   /**
@@ -98,10 +79,8 @@ Page({
   },
   listen(event) {
     let musicId=event.currentTarget.dataset.musicId
-    let musicName = event.currentTarget.dataset.musicName
-    let musicBg = event.currentTarget.dataset.musicBg
     wx.navigateTo({
-      url: '../playMusic/playMusic?id=' + musicId + '&name=' + musicName + '&musicBg=' + musicBg + '&collect=' + false,
+      url: '../playMusic/playMusic?id=' + musicId +'&collect'+false,
     })
   },
   // musicScroll(e){
@@ -122,26 +101,11 @@ Page({
     touchDot = e.touches[0].pageX;
     console.log(touchDot + '----------')
   },
-  touchMove(e) {
-    let touchMove = e.touches[0].pageX;
-    let diff = touchMove - touchDot
-    console.log(diff+'..........')
-    if (diff <= -60) {
-      this.data.left -= 250
-      this.setData({
-        left:this.data.left
-      })
-    }
-  },
   swiperChange(e){
-    let nowIndex = e.detail.current
-    this.data.musicList.forEach((item)=>{
-      item.selected=false;
-    })
-    this.data.musicList[nowIndex].selected=true
     this.setData({
+      nowIndex: e.detail.current,
       musicList: this.data.musicList,
-      mainBgImg: this.data.musicList[nowIndex].bgImg
+      mainBgImg: this.data.musicList[e.detail.current].imgUrl
     })
   },
   chooseImage(event) {

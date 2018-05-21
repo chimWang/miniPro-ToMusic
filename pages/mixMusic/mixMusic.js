@@ -1,4 +1,6 @@
 // pages/test/test.js
+const app = getApp()
+
 Page({
   canvasIdErrorCallback: function (e) {
     console.error(e.detail.errMsg)
@@ -103,16 +105,33 @@ Page({
       success: function (res) {
         var data = res.data
         //do something
-        console.log(data)
+        var header = {
+          Cooike: "JSESSIONID=" + app.globalData.cookie
+        }
         that.setData({
           isUpload: true,
           text:'生成结束'
         })
-        wx.navigateTo({
-          url: '../playMusic/playMusic?id=' + 2 + '&name=' + '一路向北' + '&musicBg=' + that.data.musicImg+'&collect='+true,
+        wx.request({
+          url: app.globalData.host + '/mini/generate/music',
+          data: {
+          },
+          header: header,
+          method: 'GET',
+          success: function (res) {
+            console.log(res)
+            app.globalData.nowMusic = res.data.data
+            wx.navigateTo({
+              url: '../playMusic/playMusic?collect='+true,
+            })
+          },
+          fail: function (res) {
+            console.log(res)
+          }
         })
+       
       },
-      fail() {
+      fail:function(){
         console.log('upload fail')
         wx.navigateBack({})
         this.setData({

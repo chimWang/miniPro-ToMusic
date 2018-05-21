@@ -1,4 +1,5 @@
 //app.js
+var utilObj=require('utils/util.js')
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -9,7 +10,50 @@ App({
     // 登录
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if(res.code) {
+          wx.request({
+            url: this.globalData.host + '/mini/login/' + res.code,
+            data: {},
+            success: res => {
+              console.log(" login success ")
+              this.globalData.minisign = res.data.minisign
+              this.globalData.cookie = res.data.session_id
+            
+              console.log("---------------list music---------------------")
+              var header = {
+                Cookie: "JSESSIONID=" + this.globalData.cookie
+              }
+              console.log(this.globalData.cookie)
+              wx.request({
+                url: this.globalData.host + '/mini/list/music',
+                data: {
+                  minisign: this.globalData.minisign
+                },
+                header: header,
+                method: 'GET',
+                success: res => {
+                  console.log(res)
+                  var storageData = wx.getStorageSync('musicList');
+                  if (!storageData) {
+                    wx.clearStorageSync()
+                    res.data.data.forEach(function (item) {
+                      item.gmtCreate = utilObj.formatTime(new Date(item.gmtCreate))
+                    })
+                    wx.setStorageSync('musicList', res.data.data)
+                  }
+          
+                },
+                fail: function (res) {
+                  console.log(res)
+                }
+              })
+            },
+            fail: function(res) {
+              console.log(" login fail ")
+              console.log(res)
+            }
+          })
+        }
       }
     })
     // 获取用户信息
@@ -34,6 +78,10 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    host: "https://www.zerotop.top",
+    cookie: '',
+    minisign: '',
+    nowMusic:{}
   }
 })
