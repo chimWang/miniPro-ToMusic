@@ -7,14 +7,14 @@ class DBPost {
   getAllMusic() {
     let res = wx.getStorageSync(this.strogeKeyName)
     if (!res) {
-      res = require('../data/data.js').musicList
+      // res = require('../data/data.js').musicList
       this.execSetStorageSync(res)
     }
     return res
   }
   //本地缓存 保存/更新
   execSetStorageSync(data) {
-    wx.clearStorage()
+    wx.clearStorageSync()
     wx.setStorageSync(this.strogeKeyName, data)
   }
   //根据id获取音乐
@@ -28,13 +28,17 @@ class DBPost {
         }
       }
     }
-    // musicData.forEach((item)=>{
-    //   if (item.id === this.musicId){
-    //     return{
-    //       data:item
-    //     }
-    //   }
-    // })
+  }
+  //添加歌曲到我的曲库
+  addMusic(newMusic){
+    var musicData = this.getAllMusic()
+    musicData.push(newMusic)
+    this.execSetStorageSync(musicData)
+  }
+  removeMusic(currentIdx){
+    var musicData = this.getAllMusic()
+    musicData.splice(currentIdx,1)
+    this.execSetStorageSync(musicData)
   }
 }
 

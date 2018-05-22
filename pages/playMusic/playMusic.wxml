@@ -11,14 +11,14 @@
   </view>
   <view class='player'>
     <view>
-      <image src='{{isCollect?(like?"/images/playMusic/like.svg":"/images/playMusic/collect.svg"):"/images/playMusic/last.svg"}}' catchtap='saveMusic' catchtap='saveMusic'></image>
+      <image src='{{isCollect?(like?"/images/playMusic/like.svg":"/images/playMusic/collect.svg"):"/images/playMusic/last.svg"}}' catchtap='leftIcon'></image>
     </view>
     <view>
       <audio id='myAudio' src='{{music.musicUrl}}' bindtimeupdate='musicStart'></audio>
       <image src='{{isPlayingMusic?"/images/playMusic/pause.svg":"/images/playMusic/start.svg"}}' catchtap='onMusicTap'></image>
     </view>
     <view>
-      <image src='{{isCollect?"/images/playMusic/remove.svg":"/images/playMusic/next.svg"}}' catchtap='remove'></image>
+      <image src='{{isCollect?"/images/playMusic/remove.svg":"/images/playMusic/next.svg"}}' catchtap='rightIcon'></image>
     </view>
   </view>
   <view class='musicProgress'>

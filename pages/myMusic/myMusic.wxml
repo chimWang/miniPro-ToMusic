@@ -3,14 +3,18 @@
   <view catchtap='back' class='back'>
     <image src='/images/playMusic/back.svg'></image>
   </view>
-  <view class='background'>
+  <view class='no-music' wx:if='{{!musicList}}'>
+    <text>暂无歌曲\n快去生成歌曲~</text>
+  </view>
+  <view class='background' wx:if='{{musicList}}'>
     <image src='{{mainBgImg}}' mode='aspectFill'></image>
   </view>
-  <swiper class='main' interval='10000' bindchange='swiperChange' current='0'>
+  <swiper class='main' interval='10000' bindchange='swiperChange' current='0' circular='true' wx:if='{{musicList}}'>
     <block wx:for='{{musicList}}' wx:for-item="item" wx:for-index="idx" wx:key="idx">
       <swiper-item class='my-music'>
         <view class='outter {{idx===nowIndex?"selected":""}}'>
-          <view class='text'>
+           <icon type="clear" size="30" class='remove-music' catchtap='removeMusic' data-current-music='{{item}}' data-current-index='{{idx}}'/> 
+          <view class='text'> 
             <view class='mask'>
               <image src='{{item.imgUrl}}' mode='aspectFill'></image>
             </view>

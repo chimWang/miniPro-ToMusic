@@ -102,9 +102,7 @@ Page({
       formData: {
         'user': 'test'
       },
-      success: function (res) {
-        var data = res.data
-        //do something
+      success:res=>{
         var header = {
           Cooike: "JSESSIONID=" + app.globalData.cookie
         }
@@ -115,9 +113,10 @@ Page({
         wx.request({
           url: app.globalData.host + '/mini/generate/music',
           data: {
+            imgUrl: JSON.parse(res.data).data[0]
           },
           header: header,
-          method: 'GET',
+          method: 'POST',
           success: function (res) {
             console.log(res)
             app.globalData.nowMusic = res.data.data

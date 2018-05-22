@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isPlayingMusic: false,
+    isPlayingMusic: true,
     progress: 0,
     isCollect: false,
     like: false
@@ -22,9 +22,12 @@ Page({
       var dbPost = new DBPost(options.id)
       var musicData = dbPost.getMusicById().data
       app.globalData.nowMusic = musicData
+      this.setData({
+        musicIdx: dbPost.getMusicById().index
+      })
     }
     this.setData({
-      music: app.globalData.nowMusic
+      music: app.globalData.nowMusic,
     })
     if (options.collect === 'true') {
       this.setData({
@@ -32,6 +35,7 @@ Page({
       })
     }
     this.audioCtx = wx.createAudioContext('myAudio')
+    this.audioCtx.play()
   },
 
   /**
@@ -108,72 +112,89 @@ Page({
       })
     } else {
       wx.navigateBack({
-
+        
       })
     }
   },
-  remove() {
-    wx.showModal({
-      title: '不喜欢这首歌',
-      content: '确定丢弃此歌曲吗？',
-      success: function (res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: '../index/index',
-          })
-        }
-      }
-    })
-  },
-  saveMusic() {
-    console.log("---------------add music----------------------")
-    var header = {
-      Cookie: "JSESSIONID=" + app.globalData.cookie
-    }
-    wx.request({
-      url: app.globalData.host + '/mini/add/music',
-      data: {
-        minisign: app.globalData.minisign,
-        music: {
-          musicUrl: this.data.music.musicUrl,
-          musicTitle: this.data.music.musicTitle,
-          imgUrl: this.data.music.imgUrl
-        }
-      },
-      header: header,
-      method: 'POST',
-      success: res => {
-        console.log(res)
-        this.setData({
-          like: true
-        })
-        wx.request({
-          url: app.globalData.host + '/mini/list/music',
-          data: {
-            minisign: app.globalData.minisign
-          },
-          header: header,
-          method: 'GET',
-          success: res => {
-            console.log(res)
-            var storageData = wx.getStorageSync('musicList');
-            wx.clearStorageSync()
-            res.data.data.forEach(function (item) {
-              item.gmtCreate = utilObj.formatTime(new Date(item.gmtCreate))
+  rightIcon(){
+    if (this.data.isCollect) {
+      wx.showModal({
+        title: '不喜欢这首歌',
+        content: '确定丢弃此歌曲吗？',
+        success: function (res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '../index/index',
             })
-            wx.setStorageSync('musicList', res.data.data)
-
-
-          },
-          fail: function (res) {
-            console.log(res)
           }
+        }
+      })
+    } else {
+      var dbPost = new DBPost()
+      if (this.data.musicIdx < dbPost.getAllMusic().length-1) {
+        var musicId = dbPost.getAllMusic()[this.data.musicIdx + 1].id
+        wx.redirectTo({
+          url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
         })
-      },
-      fail: function (res) {
-        console.log(res)
+      } else {
+        wx.showToast({
+          title: '已经是最后一首了',
+          icon: 'none',
+          duration: 2000
+        })
       }
-    })
-    console.log("---------------end----------------------")
+    }
+
+  },
+  leftIcon() {
+    if (this.data.isCollect){
+      var dbPost = new DBPost()
+      console.log("---------------add music----------------------")
+      var header = {
+        Cookie: "JSESSIONID=" + app.globalData.cookie
+      }
+      wx.request({
+        url: app.globalData.host + '/mini/add/music',
+        data: {
+          minisign: app.globalData.minisign,
+          music: {
+            musicUrl: this.data.music.musicUrl,
+            musicTitle: this.data.music.musicTitle,
+            imgUrl: this.data.music.imgUrl
+          }
+        },
+        header: header,
+        method: 'POST',
+        success: res => {
+          console.log(res)
+          this.setData({
+            like: true
+          })
+          wx.showToast({
+            title: '收藏歌曲成功',
+            icon: 'success',
+            duration: 2000
+          })
+          dbPost.addMusic(app.globalData.nowMusic)
+        },
+        fail: function (res) {
+          console.log(res)
+        }
+      })
+    }else{
+      if (this.data.musicIdx >= 1) {
+        var dbPost = new DBPost(), musicId = dbPost.getAllMusic()[this.data.musicIdx-1].id
+        wx.redirectTo({
+          url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
+        })
+      }else{
+        wx.showToast({
+          title: '已经是第一首了',
+          icon:'none',
+          duration: 2000
+        })
+      }
+    }
+  
   }
 })

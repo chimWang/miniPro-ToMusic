@@ -33,12 +33,10 @@ App({
                 method: 'GET',
                 success: res => {
                   console.log(res)
+                  wx.clearStorageSync() //先清除缓存！！
                   var storageData = wx.getStorageSync('musicList');
                   if (!storageData) {
                     wx.clearStorageSync()
-                    res.data.data.forEach(function (item) {
-                      item.gmtCreate = utilObj.formatTime(new Date(item.gmtCreate))
-                    })
                     wx.setStorageSync('musicList', res.data.data)
                   }
           

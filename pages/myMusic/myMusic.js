@@ -1,5 +1,5 @@
 // pages/myMusic/myMusic.js
-
+var utilObj = require('../../utils/util.js')
 const app = getApp()
 import {DBPost} from '../../db/DBPost.js'
 Page({
@@ -16,12 +16,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var dbPost=new DBPost()
+    var dbPost = new DBPost()
     console.log(dbPost.getAllMusic())
-    this.setData({
-      mainBgImg: dbPost.getAllMusic()[0].imgUrl,
-      musicList: dbPost.getAllMusic()
-    })
+    if (dbPost.getAllMusic().length > 0) {
+      var allMusic = dbPost.getAllMusic()
+      allMusic.forEach(function (item) {
+        item.gmtCreate = utilObj.formatTime(new Date(item.gmtCreate))
+      })
+      this.setData({
+        mainBgImg: dbPost.getAllMusic()[0].imgUrl,
+        musicList: allMusic
+      })
+    } 
   },
 
   /**
@@ -73,8 +79,8 @@ Page({
 
   },
   back() {
-    wx.navigateBack({
-
+    wx.navigateTo({
+      url: '../index/index',
     })
   },
   listen(event) {
@@ -122,6 +128,40 @@ Page({
           url: '../mixMusic/mixMusic?musicImg=' + that.data.chooseFiles,
         })
       },
+    })
+  },
+  removeMusic(event) {
+    console.log(event)
+    
+    var currentMusicId = event.currentTarget.dataset.currentMusic.id, currentIdx = event.currentTarget.dataset.currentIndex
+    wx.showModal({
+      title: '删除歌曲',
+      content: '确定删除该歌曲吗？',
+      success: res=> {
+        if (res.confirm) {
+          var header = {
+            Cookie: "JSESSIONID=" + app.globalData.cookie
+          }
+          wx.request({
+            url: app.globalData.host + '/mini/delete/music/' + currentMusicId ,
+            data: {
+            },
+            header: header,
+            method: 'GET',
+            success: res => {
+              // console.log(res)
+              var dbPost = new DBPost()
+              dbPost.removeMusic(currentIdx)
+              wx.navigateTo({
+                url: '../myMusic/myMusic',
+              })
+            },
+            fail: function (res) {
+              console.log(res)
+            }
+          })
+        }
+      }
     })
   }
 
