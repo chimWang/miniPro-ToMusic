@@ -9,6 +9,7 @@
     <image src='/images/playMusic/music.svg'></image>
     <text>{{music.musicTitle}}</text>
   </view>
+  
   <view class='player'>
     <view>
       <image src='{{isCollect?(like?"/images/playMusic/like.svg":"/images/playMusic/collect.svg"):"/images/playMusic/last.svg"}}' catchtap='leftIcon'></image>
@@ -21,10 +22,14 @@
       <image src='{{isCollect?"/images/playMusic/remove.svg":"/images/playMusic/next.svg"}}' catchtap='rightIcon'></image>
     </view>
   </view>
-  <view class='musicProgress'>
-    <view class='musicBg'></view>
-    <view style='width:{{progress}}%;'>
-      <view class='musicBtn'></view>
+  <view class='player-bar'>
+    <view style='width:12%;text-align:center;margin-top:4.5%'>{{musicCurrent}}</view>
+    <view class='musicProgress' catchtap='seek' >
+      <view class='musicBg' id='musicProgress'></view>
+      <view style='width:{{progress}}px;'>
+        <view class='musicBtn' bindtouchmove='musicBtnMove'></view>
+      </view>
     </view>
+    <view style='width:12%;text-align:center;margin-top:4.5%'>{{musicDuration}}</view>
   </view>
 </view>

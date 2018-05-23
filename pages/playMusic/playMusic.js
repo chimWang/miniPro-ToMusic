@@ -11,13 +11,20 @@ Page({
     isPlayingMusic: true,
     progress: 0,
     isCollect: false,
-    like: false
+    like: false,
+    duration: 0,
+    allWidth: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(this.data.duration===0){
+      wx.showLoading({
+        title: '正在加载歌曲',
+      })
+    }
     if (options.id) {
       var dbPost = new DBPost(options.id)
       var musicData = dbPost.getMusicById().data
@@ -100,10 +107,20 @@ Page({
     }
   },
   musicStart(e) {
-    var progress = parseInt((e.detail.currentTime / e.detail.duration) * 100)
+    var progress = parseInt(e.detail.currentTime * 285 / e.detail.duration)
     this.setData({
-      progress: progress
+      progress: progress,
+      duration: e.detail.duration,
+      musicDuration: utilObj.s_to_ms(e.detail.duration),
+      musicCurrent: utilObj.s_to_ms(e.detail.currentTime),
     })
+    wx.hideLoading()
+
+  },
+  seek(e) {
+    console.log(e)
+
+    this.audioCtx.seek(parseInt((e.detail.x - (wx.getSystemInfoSync().windowWidth * 0.12)))*this.data.duration / 285)
   },
   back() {
     if (this.data.isCollect) {
@@ -112,11 +129,11 @@ Page({
       })
     } else {
       wx.navigateBack({
-        
+
       })
     }
   },
-  rightIcon(){
+  rightIcon() {
     if (this.data.isCollect) {
       wx.showModal({
         title: '不喜欢这首歌',
@@ -131,7 +148,7 @@ Page({
       })
     } else {
       var dbPost = new DBPost()
-      if (this.data.musicIdx < dbPost.getAllMusic().length-1) {
+      if (this.data.musicIdx < dbPost.getAllMusic().length - 1) {
         var musicId = dbPost.getAllMusic()[this.data.musicIdx + 1].id
         wx.redirectTo({
           url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
@@ -147,7 +164,7 @@ Page({
 
   },
   leftIcon() {
-    if (this.data.isCollect){
+    if (this.data.isCollect) {
       var dbPost = new DBPost()
       console.log("---------------add music----------------------")
       var header = {
@@ -181,20 +198,22 @@ Page({
           console.log(res)
         }
       })
-    }else{
+    } else {
       if (this.data.musicIdx >= 1) {
-        var dbPost = new DBPost(), musicId = dbPost.getAllMusic()[this.data.musicIdx-1].id
+        var dbPost = new DBPost(), musicId = dbPost.getAllMusic()[this.data.musicIdx - 1].id
         wx.redirectTo({
           url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
         })
-      }else{
+      } else {
         wx.showToast({
           title: '已经是第一首了',
-          icon:'none',
+          icon: 'none',
           duration: 2000
         })
       }
     }
-  
+  },
+  musicBtnMove(e){
+    this.audioCtx.seek(parseInt((e.touches[0].clientX - (wx.getSystemInfoSync().windowWidth * 0.12))) * this.data.duration / 285)
   }
 })
