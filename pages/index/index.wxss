@@ -32,7 +32,7 @@ text{
   transform: translateY(-50%);
 }
 .main image{
-  border: 2px solid #fff;
+  border: 3px solid #fff;
   border-radius: 50%;
   padding: 20rpx;
   width: 80rpx;

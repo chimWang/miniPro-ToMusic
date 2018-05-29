@@ -120,7 +120,7 @@ Page({
           success: function (res) {
             console.log(res)
             app.globalData.nowMusic = res.data.data
-            wx.navigateTo({
+            wx.redirectTo({
               url: '../playMusic/playMusic?collect='+true,
             })
           },

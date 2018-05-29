@@ -9,10 +9,10 @@
   <view class='background' wx:if='{{musicList}}'>
     <image src='{{mainBgImg}}' mode='aspectFill'></image>
   </view>
-  <swiper class='main' interval='10000' bindchange='swiperChange' current='0' circular='true' wx:if='{{musicList}}'>
+  <swiper class='main' interval='10000' bindchange='swiperChange' current='{{current}}' wx:if='{{musicList}}'>
     <block wx:for='{{musicList}}' wx:for-item="item" wx:for-index="idx" wx:key="idx">
       <swiper-item class='my-music'>
-        <view class='outter {{idx===nowIndex?"selected":""}}'>
+        <view class='outter {{idx===current?"selected":""}}'>
            <icon type="clear" size="30" class='remove-music' catchtap='removeMusic' data-current-music='{{item}}' data-current-index='{{idx}}'/> 
           <view class='text'> 
             <view class='mask'>

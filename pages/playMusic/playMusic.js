@@ -20,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(this.data.duration===0){
+    if (this.data.duration === 0) {
       wx.showLoading({
         title: '正在加载歌曲',
       })
@@ -63,14 +63,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('hide')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('unload')
   },
 
   /**
@@ -120,29 +120,19 @@ Page({
   seek(e) {
     console.log(e)
 
-    this.audioCtx.seek(parseInt((e.detail.x - (wx.getSystemInfoSync().windowWidth * 0.12)))*this.data.duration / 285)
+    this.audioCtx.seek(parseInt((e.detail.x - (wx.getSystemInfoSync().windowWidth * 0.12))) * this.data.duration / 285)
   },
   back() {
-    if (this.data.isCollect) {
-      wx.redirectTo({
-        url: '../index/index',
-      })
-    } else {
-      wx.navigateBack({
-
-      })
-    }
+    wx.navigateBack({})
   },
   rightIcon() {
     if (this.data.isCollect) {
       wx.showModal({
         title: '不喜欢这首歌',
         content: '确定丢弃此歌曲吗？',
-        success: function (res) {
+        success: res => {
           if (res.confirm) {
-            wx.redirectTo({
-              url: '../index/index',
-            })
+            wx.navigateBack({})
           }
         }
       })
@@ -152,6 +142,9 @@ Page({
         var musicId = dbPost.getAllMusic()[this.data.musicIdx + 1].id
         wx.redirectTo({
           url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
+          success: res => {
+            this.audioCtx.pause()
+          }
         })
       } else {
         wx.showToast({
@@ -203,6 +196,9 @@ Page({
         var dbPost = new DBPost(), musicId = dbPost.getAllMusic()[this.data.musicIdx - 1].id
         wx.redirectTo({
           url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
+          success: res => {
+            this.audioCtx.pause()
+          }
         })
       } else {
         wx.showToast({
@@ -213,7 +209,7 @@ Page({
       }
     }
   },
-  musicBtnMove(e){
+  musicBtnMove(e) {
     this.audioCtx.seek(parseInt((e.touches[0].clientX - (wx.getSystemInfoSync().windowWidth * 0.12))) * this.data.duration / 285)
   }
 })
