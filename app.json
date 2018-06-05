@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/musicRank/musicRank",
     "pages/myMusic/myMusic",
     "pages/mixMusic/mixMusic",
-    "pages/playMusic/playMusic"      
+    "pages/playMusic/playMusic"
   ],
   "window": {
     "navigationStyle": "custom"

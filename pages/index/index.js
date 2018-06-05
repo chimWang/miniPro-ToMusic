@@ -56,6 +56,11 @@ Page({
       url: '../myMusic/myMusic'
     })
   },
+  rankMusic(){
+    wx.navigateTo({
+      url: '../musicRank/musicRank'
+    })
+  },
   chooseImage(event){
     var that=this;
     wx.chooseImage({

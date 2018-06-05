@@ -2,29 +2,30 @@
 var utilObj = require('../../utils/util.js')
 const app = getApp()
 import { DBPost } from '../../db/DBPost.js'
-var dbPost = new DBPost(), allMusic = dbPost.getAllMusic()
+
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     mainBgImg: '',
-    chooseFiles: ''
+    chooseFiles: '',
+    current:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var dbPost = new DBPost(),allMusic = dbPost.getAllMusic()
     console.log(dbPost.getAllMusic())
     if (dbPost.getAllMusic().length > 0) {
       allMusic.forEach(function (item) {
         item.gmtCreate = utilObj.formatTime(new Date(item.gmtCreate))
       })
       this.setData({
-        mainBgImg: allMusic[allMusic.length - 1].imgUrl,
+        mainBgImg: allMusic[0].imgUrl,
         musicList: allMusic,
-        current: allMusic.length - 1
       })
     }
   },
@@ -84,7 +85,7 @@ Page({
   listen(event) {
     let musicId = event.currentTarget.dataset.musicId
     wx.navigateTo({
-      url: '../playMusic/playMusic?id=' + musicId + '&collect' + false,
+      url: '../playMusic/playMusic?id=' + musicId + '&collect=' + false,
     })
   },
   // musicScroll(e){
@@ -111,7 +112,6 @@ Page({
       musicList: this.data.musicList,
       mainBgImg: this.data.musicList[e.detail.current].imgUrl
     })
-    console.log(e.detail.current+'----')
   },
   chooseImage(event) {
     var that = this;
@@ -150,6 +150,7 @@ Page({
               // wx.redirectTo({
               //   url: '../myMusic/myMusic',
               // })
+              var dbPost = new DBPost()
               if (this.data.current === 0 && this.data.musicList.length === 1) {
                 this.data.musicList.splice(this.data.current, 1)
                 dbPost.removeMusic(this.data.current)
@@ -170,7 +171,6 @@ Page({
                   mainBgImg: this.data.musicList[this.data.current].imgUrl
 
                 })
-                console.log(this.data.current)
               } else {
                 this.data.musicList.splice(this.data.current, 1)
                 dbPost.removeMusic(this.data.current)

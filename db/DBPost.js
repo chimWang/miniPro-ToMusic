@@ -32,7 +32,7 @@ class DBPost {
   //添加歌曲到我的曲库
   addMusic(newMusic){
     var musicData = this.getAllMusic()
-    musicData.push(newMusic)
+    musicData.unshift(newMusic)
     this.execSetStorageSync(musicData)
   }
   removeMusic(currentIdx){

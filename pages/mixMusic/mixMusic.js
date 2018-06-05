@@ -1,6 +1,6 @@
 // pages/test/test.js
+var utilObj = require('../../utils/util.js')
 const app = getApp()
-
 Page({
   canvasIdErrorCallback: function (e) {
     console.error(e.detail.errMsg)
@@ -9,10 +9,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isUpload:false,
-    uploadPercent:0,
-    musicImg:'',
-    text:'点击生成音乐'
+    isUpload: false,
+    uploadPercent: 0,
+    musicImg: '',
+    text: '点击生成音乐',
+    isModal: false,
+    musicTitle: utilObj.formatTime(new Date()),
+    canvasShow:true
   },
 
   /**
@@ -20,7 +23,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      musicImg:options.musicImg
+      musicImg: options.musicImg
     })
   },
 
@@ -37,47 +40,47 @@ Page({
     progressCanvas.stroke();
     progressCanvas.draw();
   },
- 
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   },
   drawArc(ctx, s, e) {
     ctx.setFillStyle('white');
@@ -102,13 +105,13 @@ Page({
       formData: {
         'user': 'test'
       },
-      success:res=>{
+      success: res => {
         var header = {
           Cooike: "JSESSIONID=" + app.globalData.cookie
         }
         that.setData({
           isUpload: true,
-          text:'生成结束'
+          text: '生成结束'
         })
         wx.request({
           url: app.globalData.host + '/mini/generate/music',
@@ -117,20 +120,23 @@ Page({
           },
           header: header,
           method: 'POST',
-          success: function (res) {
+          success: res => {
             console.log(res)
             app.globalData.nowMusic = res.data.data
-            wx.redirectTo({
-              url: '../playMusic/playMusic?collect='+true,
+            this.setData({
+              isModal: true,
+              canvasShow:false
             })
+
+
           },
           fail: function (res) {
             console.log(res)
           }
         })
-       
+
       },
-      fail:function(){
+      fail: function () {
         console.log('upload fail')
         wx.navigateBack({})
         this.setData({
@@ -142,15 +148,38 @@ Page({
       console.log(res)
       this.setData({
         uploadPercent: res.progress,
-        text:'正在生成'+res.progress+'%'
+        text: '正在生成' + res.progress + '%'
       })
-      this.drawArc(mainCanvas, 0, res.progress / 50 *Math.PI)
+      this.drawArc(mainCanvas, 0, res.progress / 50 * Math.PI)
     })
   },
   back() {
-    wx.navigateBack({
+    wx.navigateBack()
+  },
 
+  hideModal: function () {
+    this.setData({
+      isModal: false
+    });
+  },
+
+  onCancel: function () {
+    this.hideModal();
+    wx.redirectTo({
+      url: '../playMusic/playMusic?collect=' + true + '&musicTitle=' + this.data.musicTitle,
     })
   },
+
+  onConfirm: function () {
+    this.hideModal();
+    wx.redirectTo({
+      url: '../playMusic/playMusic?collect=' + true + '&musicTitle=' + this.data.musicTitle,
+    })
+  },
+  inputChange(event){
+    this.setData({
+      musicTitle:event.detail.value
+    })
+  }
 
 })

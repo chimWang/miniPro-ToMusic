@@ -1,0 +1,15 @@
+<template name='modal'>
+  <view class="modal-mask" catchtouchmove="preventTouchMove"></view>
+  <view class="modal-dialog">
+    <view class="modal-title">为该音乐取个名字</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <input placeholder-class="input-holder" maxlength="10" bindinput="inputChange" class="input" placeholder="我的音乐" value='{{musicTitle}}'></input>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>

@@ -13,7 +13,7 @@
       <text>新建创作</text>
     </view>
     <view>
-      <image src='/images/index/friend.svg'></image>
+      <image src='/images/index/friend.svg' catchtap='rankMusic'></image>
       <text>歌曲排行</text>
     </view>
   </view>

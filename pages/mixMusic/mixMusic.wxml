@@ -1,4 +1,5 @@
 <!--pages/test/test.wxml-->
+<import src="../../template/modal.wxml" />
 <view class='main' catchtap='uploadMusic'>
   <view catchtap='back' class='back'>
     <image src='/images/playMusic/back.svg' mode='aspectFill'></image>
@@ -7,7 +8,9 @@
     <text>{{text}}</text>
     <view class='mask'></view>
   </image>
-  <canvas style="width: 380px; height: 380px;" canvas-id="progressCanvas" class='progress-canvas'></canvas>
-  <canvas style="width: 380px; height: 380px;" canvas-id="mainCanvas" class='progress-canvas'></canvas>
-
+  <view wx:if='{{canvasShow}}'>
+    <canvas style="width: 380px; height: 380px;" canvas-id="progressCanvas" class='progress-canvas'></canvas>
+    <canvas style="width: 380px; height: 380px;" canvas-id="mainCanvas" class='progress-canvas'></canvas>
+  </view>
 </view>
+<template is="modal" wx:if='{{isModal}}'></template>

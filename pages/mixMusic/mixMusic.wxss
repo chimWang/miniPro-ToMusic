@@ -1,4 +1,5 @@
 /* pages/test/test.wxss */
+@import "../../template/modal.wxss";
 page{
   width: 100%;
   height: 100%;

@@ -1,0 +1,17 @@
+<view catchtap='back' class='back'>
+  <image src='/images/playMusic/back.svg'></image>
+</view>
+<block wx:for='{{rankList}}' wx:for-item="item" wx:for-index="idx" wx:key="idx">
+  <view class='rank' catchtap='playMusic' data-music-idx="{{idx}}">
+    <view class='rank-left'>
+      <view class='icon'>
+        <image src='{{item.imgUrl}}' mode='aspectFill' class='icon-image'></image>
+        <image src='{{idx===currentIdx?"/images/playMusic/pause.svg":"/images/playMusic/start.svg"}}' class='player' catchtap='play' data-music-idx="{{idx}}"></image>
+      </view>
+    </view>
+    <view class='rank-right'>
+      <text class='title'>{{item.musicTitle}}</text>
+      <text style='font-size:smaller'>作者：Crescent</text>
+    </view>
+  </view>
+</block>

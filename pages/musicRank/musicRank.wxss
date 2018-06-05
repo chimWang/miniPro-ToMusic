@@ -1,0 +1,68 @@
+/* musicRank/musicRank.wxss */
+
+page {
+  width: 100%;
+  background-color: #3e4651;
+  color: #fff;
+  padding-top: 150rpx;
+  font-size: smaller;
+}
+
+.back {
+  position: fixed;
+  left: 20rpx;
+  top: 50rpx;
+}
+
+.back image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.rank {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  height: 170rpx;
+  margin-bottom: 15px;
+  background: #313841;
+  padding: 30rpx;
+}
+
+.rank-left {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.rank-left .icon {
+  position: relative;
+  width: 170rpx;
+  height: 170rpx;
+}
+
+.icon-image {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.rank-left .player {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rank-right {
+  display: flex;
+  flex-direction: column;
+  line-height: 2rem;
+  width: 50%;
+  justify-content: center;
+}

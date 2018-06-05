@@ -13,13 +13,17 @@ Page({
     isCollect: false,
     like: false,
     duration: 0,
-    allWidth: 0
+    allWidth: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    if (options.musicTitle) {
+      app.globalData.nowMusic.musicTitle = options.musicTitle
+    }
     if (this.data.duration === 0) {
       wx.showLoading({
         title: '正在加载歌曲',
@@ -71,6 +75,37 @@ Page({
    */
   onUnload: function () {
     console.log('unload')
+    if (this.data.like) {
+      var dbPost = new DBPost()
+      console.log("---------------add music----------------------")
+      var header = {
+        Cookie: "JSESSIONID=" + app.globalData.cookie
+      }
+      wx.request({
+        url: app.globalData.host + '/mini/add/music',
+        data: {
+          minisign: app.globalData.minisign,
+          music: {
+            musicUrl: this.data.music.musicUrl,
+            musicTitle: app.globalData.nowMusic.musicTitle,
+            imgUrl: this.data.music.imgUrl
+          }
+        },
+        header: header,
+        method: 'POST',
+        success: res => {
+          console.log(res)
+          this.setData({
+            like: true
+          })
+
+          dbPost.addMusic(app.globalData.nowMusic)
+        },
+        fail: function (res) {
+          console.log(res)
+        }
+      })
+    }
   },
 
   /**
@@ -124,8 +159,29 @@ Page({
   },
   back() {
     wx.navigateBack({})
+    // if (this.data.like) {
+    //   wx.navigateBack({})
+    // } else {
+    //   wx.showModal({
+    //     title: '不喜欢这首歌',
+    //     content: '确定丢弃此歌曲吗？',
+    //     success: res => {
+    //       if (res.confirm) {
+    //         wx.navigateBack({})
+    //       }
+    //     }
+    //   })
+    // }
   },
   rightIcon() {
+    if (this.data.like) {
+      wx.showToast({
+        title: '无法丢弃',
+        icon: 'none',
+        duration: 2000
+      })
+      return;
+    }
     if (this.data.isCollect) {
       wx.showModal({
         title: '不喜欢这首歌',
@@ -158,39 +214,26 @@ Page({
   },
   leftIcon() {
     if (this.data.isCollect) {
-      var dbPost = new DBPost()
-      console.log("---------------add music----------------------")
-      var header = {
-        Cookie: "JSESSIONID=" + app.globalData.cookie
+      if (!this.data.like) {
+        this.setData({
+          like: !this.data.like
+        })
+        wx.showToast({
+          title: '收藏成功',
+          icon: 'none',
+          duration: 2000
+        })
+      } else {
+        this.setData({
+          like: !this.data.like
+        })
+        wx.showToast({
+          title: '取消收藏',
+          icon: 'none',
+          duration: 2000
+        })
       }
-      wx.request({
-        url: app.globalData.host + '/mini/add/music',
-        data: {
-          minisign: app.globalData.minisign,
-          music: {
-            musicUrl: this.data.music.musicUrl,
-            musicTitle: this.data.music.musicTitle,
-            imgUrl: this.data.music.imgUrl
-          }
-        },
-        header: header,
-        method: 'POST',
-        success: res => {
-          console.log(res)
-          this.setData({
-            like: true
-          })
-          wx.showToast({
-            title: '收藏歌曲成功',
-            icon: 'success',
-            duration: 2000
-          })
-          dbPost.addMusic(app.globalData.nowMusic)
-        },
-        fail: function (res) {
-          console.log(res)
-        }
-      })
+
     } else {
       if (this.data.musicIdx >= 1) {
         var dbPost = new DBPost(), musicId = dbPost.getAllMusic()[this.data.musicIdx - 1].id
@@ -211,5 +254,6 @@ Page({
   },
   musicBtnMove(e) {
     this.audioCtx.seek(parseInt((e.touches[0].clientX - (wx.getSystemInfoSync().windowWidth * 0.12))) * this.data.duration / 285)
-  }
+  },
+
 })
