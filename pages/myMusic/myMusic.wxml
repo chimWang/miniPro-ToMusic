@@ -1,5 +1,5 @@
 <!--pages/myMusic/myMusic.wxml-->
-<view class='container'>
+<view class='container' >
   <view catchtap='back' class='back'>
     <image src='/images/playMusic/back.svg'></image>
   </view>
@@ -12,14 +12,14 @@
   <swiper class='main' interval='10000' bindchange='swiperChange' current='{{current}}' wx:if='{{musicList}}'>
     <block wx:for='{{musicList}}' wx:for-item="item" wx:for-index="idx" wx:key="idx">
       <swiper-item class='my-music'>
-        <view class='outter {{idx===current?"selected":""}}'>
-           <icon type="clear" size="30" class='remove-music' catchtap='removeMusic' data-current-music='{{item}}' data-current-index='{{idx}}'/> 
-          <view class='text'> 
+        <view class='outter {{idx===current?"selected":""}}' catchtap='hideEdit'>
+          <icon type="clear" size="30" class='remove-music' catchtap='removeMusic' data-current-music='{{item}}' data-current-index='{{idx}}' />
+          <view class='text'>
             <view class='mask'>
               <image src='{{item.imgUrl}}' mode='aspectFill'></image>
             </view>
-            <view>
-              <text style='font-size:x-large'>{{item.musicTitle}}</text>
+            <view style='position:relative'>
+              <text style='font-size:x-large'>{{nameChanged?temTitle:item.musicTitle}}</text>
             </view>
             <view>
               <text>{{item.gmtCreate}}</text>

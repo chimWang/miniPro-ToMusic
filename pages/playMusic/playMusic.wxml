@@ -1,3 +1,4 @@
+<import src="../../template/modal.wxml" />
 <view class='container'>
   <view catchtap='back' class='back'>
     <image src='/images/playMusic/back.svg'></image>
@@ -8,6 +9,7 @@
   <view class='title'>
     <image src='/images/playMusic/music.svg'></image>
     <text>{{music.musicTitle}}</text>
+    <image src='../../images/playMusic/edit.svg' class='edit' catchtap='editMusicName' wx:if='{{isEdit}}'></image>
   </view>
   
   <view class='player'>
@@ -33,3 +35,4 @@
     <view style='width:12%;text-align:center;margin-top:4.5%'>{{musicDuration}}</view>
   </view>
 </view>
+<template is="modal" wx:if='{{isModal}}' data='{{modalTitle:"修改名字"}}'></template>

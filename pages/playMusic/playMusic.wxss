@@ -1,3 +1,4 @@
+@import "../../template/modal.wxss";
 page{
   height: 100%;
 }
@@ -88,4 +89,10 @@ text{
   width: 30px;
   height: 30px;
   margin-right: 5px;
+}
+image.edit {
+  margin-left: 5px;
+  margin-top: 5px;
+  width: 40rpx;
+  height: 40rpx;
 }

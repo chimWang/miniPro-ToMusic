@@ -14,8 +14,8 @@ Page({
     musicImg: '',
     text: '点击生成音乐',
     isModal: false,
-    musicTitle: utilObj.formatTime(new Date()),
-    canvasShow:true
+    musicTitle: '未命名',
+    canvasShow: true,
   },
 
   /**
@@ -59,7 +59,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('unload')
   },
 
   /**
@@ -121,14 +121,11 @@ Page({
           header: header,
           method: 'POST',
           success: res => {
-            console.log(res)
             app.globalData.nowMusic = res.data.data
             this.setData({
               isModal: true,
-              canvasShow:false
+              canvasShow: false
             })
-
-
           },
           fail: function (res) {
             console.log(res)
@@ -136,7 +133,7 @@ Page({
         })
 
       },
-      fail: function () {
+      fail: () => {
         console.log('upload fail')
         wx.navigateBack({})
         this.setData({
@@ -171,14 +168,21 @@ Page({
   },
 
   onConfirm: function () {
-    this.hideModal();
-    wx.redirectTo({
-      url: '../playMusic/playMusic?collect=' + true + '&musicTitle=' + this.data.musicTitle,
-    })
+    if (this.data.musicTitle) {
+      this.hideModal();
+      wx.redirectTo({
+        url: '../playMusic/playMusic?collect=' + true + '&musicTitle=' + this.data.musicTitle,
+      })
+    }else{
+      wx.showToast({
+        title: '不能为空',
+        icon:'none'
+      })
+    }
   },
-  inputChange(event){
+  inputChange(event) {
     this.setData({
-      musicTitle:event.detail.value
+      musicTitle: event.detail.value
     })
   }
 

@@ -1,10 +1,10 @@
 <template name='modal'>
   <view class="modal-mask" catchtouchmove="preventTouchMove"></view>
   <view class="modal-dialog">
-    <view class="modal-title">为该音乐取个名字</view>
+    <view class="modal-title">{{modalTitle}}</view>
     <view class="modal-content">
       <view class="modal-input">
-        <input placeholder-class="input-holder" maxlength="10" bindinput="inputChange" class="input" placeholder="我的音乐" value='{{musicTitle}}'></input>
+        <input placeholder-class="input-holder" maxlength="10" bindinput="inputChange" class="input" placeholder="音乐名称" value='{{musicTitle}}'></input>
       </view>
     </view>
     <view class="modal-footer">

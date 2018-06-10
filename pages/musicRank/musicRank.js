@@ -22,7 +22,8 @@ Page({
     wx.request({
       url: app.globalData.host + '/mini/list/music',
       data: {
-        minisign: app.globalData.minisign
+        minisign: app.globalData.minisign,
+        rank:1,
       },
       header: header,
       method: 'GET',

@@ -29,6 +29,13 @@ class DBPost {
       }
     }
   }
+  //修改歌曲名字
+  editMusicName(name){
+    var musicData = this.getAllMusic()
+    console.log(name)
+    musicData[this.getMusicById().index].musicTitle=name
+    this.execSetStorageSync(musicData)
+  }
   //添加歌曲到我的曲库
   addMusic(newMusic){
     var musicData = this.getAllMusic()

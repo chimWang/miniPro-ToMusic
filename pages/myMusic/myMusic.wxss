@@ -1,75 +1,88 @@
 /* pages/myMusic/myMusic.wxss */
-page{
+
+page {
   height: 100%;
 }
-.back{
+
+.back {
   z-index: 100;
   position: absolute;
   left: 20rpx;
   top: 50rpx;
 }
-.back image{
+
+.back image {
   width: 50rpx;
   height: 50rpx;
 }
-image{
+
+image {
   width: 40px;
   height: 40px;
 }
-.container{
+
+.container {
   color: #fff;
   position: relative;
 }
-.background{
+
+.background {
   z-index: -1;
   width: 100%;
   height: 100%;
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
-  bottom:0;
+  bottom: 0;
   filter: brightness(25%);
 }
 
-.background image{
+.background image {
   width: 100%;
   height: 100%;
 }
-.main{
+
+.main {
   width: 90%;
   height: 900rpx;
 }
-.my-music{
+
+.my-music {
   position: relative;
   width: 100%;
   height: 100%;
 }
-.outter{
+
+.outter {
   position: absolute;
   width: 80%;
   height: 80%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
-.remove-music{
+
+.remove-music {
   position: absolute;
-  top:2px;
+  top: 2px;
   right: 5px;
 }
-.my-music .text{
+
+.my-music .text {
   text-align: center;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
-.my-music image{
+
+.my-music image {
   border-radius: 5px;
   width: 100%;
   height: 100%;
 }
-.mask{
+
+.mask {
   z-index: -1;
   width: 100%;
   height: 100%;
@@ -78,46 +91,52 @@ image{
   left: 0;
   filter: brightness(50%);
 }
-.delete-music{
+
+.delete-music {
   position: absolute;
   top: 0;
   right: 0;
   width: 20px;
-  height: 20px
+  height: 20px;
 }
 
-.mask image{
+.mask image {
   width: 100%;
   height: 100%;
   border-radius: 5px;
 }
+
 .my-music .controls {
   width: 60px;
   margin: 0 auto;
   border: 2px solid #fff;
   padding: 5px 10px 5px 10px;
 }
-.create-music{
+
+.create-music {
   position: absolute;
-  bottom:60rpx;
+  bottom: 60rpx;
 }
-.selected{
+
+.selected {
   width: 85%;
   height: 85%;
 }
-.no-music{
+
+.no-music {
   width: 100%;
   height: 100%;
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
-  bottom:0;
+  bottom: 0;
   background-color: #666;
 }
-.no-music text{
+
+.no-music text {
   text-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }

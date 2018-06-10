@@ -41,7 +41,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var dbPost = new DBPost(), allMusic = dbPost.getAllMusic()
+    if (dbPost.getAllMusic().length > 0) {
+      allMusic.forEach(function (item) {
+        item.gmtCreate = utilObj.formatTime(new Date(item.gmtCreate))
+      })
+      this.setData({
+        musicList: allMusic,
+      })
+    }
   },
 
   /**
@@ -188,6 +196,10 @@ Page({
         }
       }
     })
-  }
+  },
+
+
+
+  
 
 })

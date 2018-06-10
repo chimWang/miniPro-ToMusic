@@ -14,6 +14,7 @@ Page({
     like: false,
     duration: 0,
     allWidth: 0,
+    isEdit: false
   },
 
   /**
@@ -34,7 +35,8 @@ Page({
       var musicData = dbPost.getMusicById().data
       app.globalData.nowMusic = musicData
       this.setData({
-        musicIdx: dbPost.getMusicById().index
+        musicIdx: dbPost.getMusicById().index,
+        isEdit: true
       })
     }
     this.setData({
@@ -98,7 +100,7 @@ Page({
           this.setData({
             like: true
           })
-
+          console.log(app.globalData.nowMusic)
           dbPost.addMusic(app.globalData.nowMusic)
         },
         fail: function (res) {
@@ -254,6 +256,64 @@ Page({
   },
   musicBtnMove(e) {
     this.audioCtx.seek(parseInt((e.touches[0].clientX - (wx.getSystemInfoSync().windowWidth * 0.12))) * this.data.duration / 285)
+  },
+  editMusicName() {
+    this.setData({
+      isModal: true,
+    })
+  },
+  onCancel: function () {
+    this.hideModal();
+  },
+
+  onConfirm: function () {
+    console.log(app.globalData.nowMusic.id)
+    if (this.data.temTitle) {
+      var header = {
+        Cookie: "JSESSIONID=" + app.globalData.cookie
+      }
+      wx.request({
+        url: app.globalData.host + '/mini/update/music',
+        data: {
+          music: {
+            id: app.globalData.nowMusic.id,
+            musicTitle: this.data.temTitle,
+          }
+        },
+        header: header,
+        method: 'POST',
+        success: res => {
+          this.hideModal();
+          app.globalData.nowMusic.musicTitle = this.data.temTitle
+          this.setData({
+            music: app.globalData.nowMusic
+          })
+          var dbPost = new DBPost(app.globalData.nowMusic.id)
+          dbPost.editMusicName(this.data.temTitle)
+          this.setData({
+            musicList: dbPost.getAllMusic()
+          })
+        },
+        fail: function (res) {
+          console.log(res)
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '不能为空',
+        icon:'none'
+      })
+    }
+  },
+  inputChange(event) {
+    this.setData({
+      temTitle: event.detail.value
+    })
+  },
+  hideModal: function () {
+    this.setData({
+      isModal: false
+    });
   },
 
 })

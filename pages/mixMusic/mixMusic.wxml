@@ -13,4 +13,4 @@
     <canvas style="width: 380px; height: 380px;" canvas-id="mainCanvas" class='progress-canvas'></canvas>
   </view>
 </view>
-<template is="modal" wx:if='{{isModal}}'></template>
+<template is="modal" wx:if='{{isModal}}' data='{{modalTitle:"为该音乐取个名字"}}'></template>
